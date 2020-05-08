@@ -1,19 +1,21 @@
 class RelationshipsController < ApplicationController
-	def follow
-	  current_user.follow(params[:id])
+	def create
+	  current_user.follow(params[:user_id])
 	  redirect_back(fallback_location: users_path)
 	end
 
-	def unfollow
-	  current_user.unfollow(params[:id])
+	def destroy
+	  current_user.unfollow(params[:user_id])
 	  redirect_back(fallback_location: users_path)
 	end
 
-	def follow_index
-		@user = User.find(params[:id])
+	def follower
+		user = User.find(params[:user_id])
+		@users = user.following_user
 	end
 
-	def follower_index
-		@user = User.find(params[:id])
+	def followed
+		user = User.find(params[:user_id])
+		@users = user.follower_user
 	end
 end
